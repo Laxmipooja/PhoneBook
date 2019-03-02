@@ -14,7 +14,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
             method: 'GET',
             url: 'http://localhost:4567/contact'
             }).then(function(response) {
-            Table_AllContacts(response.data);
+            $scope.contactdata = response.data;
             }, function(response) {
             No_Data();
             });
@@ -38,25 +38,8 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
         $scope.ListGroups = false;
         $scope.DisplayAll = true;
     }
+     $scope.Details_contacts=function(event){
+          var id = $(event.target).attr('id')
+          console.log(tempUrl);
+     }
 });
-
-function Table_AllContacts(data){
-    console.log(data[0]);
-    Table = document.createElement("table");
-    Table.className = "table";
-    TableHead = document.createElement("thead");
-    HeadRow = document.createElement('tr');
-    HeadColumn1=document.createElement("th");
-    HeadColumn1.appendChild(document.createTextNode("CONTACTS"))
-    HeadRow.appendChild(HeadColumn1);
-    TableHead.appendChild(HeadRow);
-    Tbody = document.createElement("tbody")
-    for(let contact of data){
-       let trow = document.createElement('tr');
-       let tcol = document.createElement('td');
-       let text = document.createTextNode(contact.Firstname)
-        
-        
-    }
-    Table.appendChild(Tbody);
-}

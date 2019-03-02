@@ -14,7 +14,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
             method: 'GET',
             url: 'http://localhost:4567/contact'
             }).then(function(response) {
-            Table_AllContacts(response.data);
+            $scope.contactdata = response.data;
             }, function(response) {
             No_Data();
             });
@@ -38,18 +38,8 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
         $scope.ListGroups = false;
         $scope.DisplayAll = true;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+     $scope.Details_contacts=function(event){
+          var id = $(event.target).attr('id')
+          console.log(tempUrl);
+     }
 });
-
-function Table_AllContacts(data){
-    console.log(data[0])
-}

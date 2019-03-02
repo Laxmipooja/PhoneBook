@@ -34,7 +34,21 @@
     <i class="material-icons  custom" style="color:black;font-size:60px" ng-click="List_Group()">group</i>
     </div>
 </div>
-<div ng-if="DisplayAll"></div>
+<div ng-if="DisplayAll" id='AllContacts'>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CONTACTS</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat='contact in contactdata' class="success">
+            <td id='{{contact.contact_id}}' ng-click='Details_contacts($event)'>{{contact.fname}}</td>
+          
+        </tr>
+        </tbody>
+    </table>
+</div>
 <div class="row" ng-if="AddNewContacts">
 <form>
            <div class="form-group row">
@@ -113,9 +127,8 @@
             <div class="row">
                 <div class="col-sm-5"></div>
                         <div class="col-sm-3">
-                                <button type="submit"><i class="material-icons  custom" style="color:black;font-size:60px;padding-right:2%" ng-click="save_Contacts()">save</i></button>
+                                <button type="submit"><i class="material-icons  custom" style="color:black;font-size:60px;padding-right:2%" ng- click="save_Contacts()">save</i></button>
                                 <i class="material-icons  custom" style="color:black;font-size:60px;padding-right:2%" ng-click="Cancel_Contacts()">cancel</i>
-                                 
                         </div>
                 
             </div>     
