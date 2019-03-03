@@ -26,7 +26,7 @@ DROP TABLE if exists contact_info;
 CREATE TABLE contact_info ( 
 country_code varchar(5), 
 extension varchar(5), 
-contact_number varchar(10) not null, 
+contact_number varchar(15) not null, 
 contact_id int, 
 CONSTRAINT PRIMARY KEY (contact_number, contact_id),
 CONSTRAINT FOREIGN KEY (contact_id) REFERENCES contact(contact_id) ON DELETE CASCADE);
@@ -44,3 +44,6 @@ group_id int,
 CONSTRAINT PRIMARY KEY(contact_id,group_id),
 CONSTRAINT FOREIGN KEY (contact_id) REFERENCES contact(contact_id) ON DELETE CASCADE, 
 CONSTRAINT FOREIGN KEY (group_id) REFERENCES c_group(group_id) ON DELETE CASCADE);
+
+
+

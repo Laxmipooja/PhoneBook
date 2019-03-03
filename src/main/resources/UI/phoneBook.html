@@ -36,15 +36,10 @@
 </div>
 <div ng-if="DisplayAll" id='AllContacts'>
     <table class="table">
-        <thead>
-            <tr>
-                <th>CONTACTS</th>
-            </tr>
-        </thead>
         <tbody>
-        <tr ng-repeat='contact in contactdata' class="success">
+        <tr ng-repeat='contact in contactdata' class="success" >
             <td id='{{contact.contact_id}}' ng-click='Details_contacts($event)'>{{contact.fname}}</td>
-          
+            <td class="success" ><i class="material-icons  custom" id='{{contact.contact_id}}' style="color:black;font-size:60px;padding-right:2%" ng-click="Delete_contacts($event)">delete</i></td>
         </tr>
         </tbody>
     </table>
@@ -115,7 +110,7 @@
                 <div class="col-sm-3">
                     <label for="Groups"  class="control-label" style="color:black;margin-left:2%">Group:</label>
                     <md-input-container>
-                        <md-select ng-model="selectedGroup" multiple>
+                        <md-select ng-model="Details.groups" multiple>
                             <md-optgroup label="Group">
                                 <md-option  ng-repeat="Group in groups">{{Group.label}}</md-option>
                             </md-optgroup>
@@ -123,18 +118,136 @@
                         </md-select>
                   </md-input-container>
                </div> 
+               <div class="col-sm-3">
+                    <label for="Gender"  class="control-label" style="color:black;margin-left:2%">GENDER:</label>
+                    <md-input-container>
+                        <md-select ng-model="Details.gender" multiple>
+                            <md-optgroup label="GENDER">
+                                <md-option  ng-repeat="c in gender">{{c}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                  </md-input-container>
+               </div> 
             </div>
             <div class="row">
                 <div class="col-sm-5"></div>
                         <div class="col-sm-3">
-                                <button type="submit"><i class="material-icons  custom" style="color:black;font-size:60px;padding-right:2%" ng- click="save_Contacts()">save</i></button>
+                                <i class="material-icons  custom" style="color:black;font-size:60px;padding-right:2%" ng-click="save_Contacts(Details)">save</i>
                                 <i class="material-icons  custom" style="color:black;font-size:60px;padding-right:2%" ng-click="Cancel_Contacts()">cancel</i>
                         </div>
                 
             </div>     
 </form>
 </div> 
-<div ng-if="ListGroups"></div> 
+<div ng-if="ListGroups">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>GROUPS</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat='group in groupList' class="success">
+            <td id='{{group.id}}' ng-click='Details_GroupContacts($event)'>{{group.label}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div> 
+<div ng-if="SingleContacts">
+    <form>
+           <div class="form-group row">
+                  <div class ="col-sm-4"></div>
+                  <div class ="col-sm-4">
+                        <h5 style='text-align:center;color:black' ng-model='PersoneName'>{{PersoneName}}</h5>
+                  </div>
+                  <div class ="col-sm-3"></div>
+            </div>
+            <div class="row" >
+                <div class="col-sm-1"></div>
+                <div class="col-sm-8">
+                    <label for="Fname" class="control-label" style="color:black;margin-left:2%">FirstName:</label>
+                    <input type="text" class="form-control" id="FirstName" ng-placeholder="First Name:" ng-model="Details.fname" ng-required="required">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-8">
+                    
+                    <label for="Mname" class="control-label" style="color:black;margin-left:2%">MiddleName:</label>
+                    <input type="text" class="form-control" id="MiddleName" ng-placeholder="Middle Name:" ng-model="Details.mname" ng-required="required">
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-8">
+                    <label for="Lname" class="control-label" style="color:black;margin-left:2%">LastName:</label>
+                    <input type="text" class="form-control" id="LastName" ng-placeholder="Last Name:" ng-model="Details.lname" ng-required="required"=>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-4">
+                    <label for="ContactNumber" class="control-label" style="color:black;margin-left:2%">ContactNumber:</label>
+                    <input type="text" class="form-control" id="ContactNumber" ng-placeholder="ContactNumber" ng-model="Details.contactNumber" ng-required="required">
+                </div>
+                <div class="col-sm-2">
+                    <label for="Extension" class="control-label" style="color:black;margin-left:2%">Extension:</label>
+                    <input type="text" class="form-control" id="ContactNumber" ng-placeholder="ContactNumber" ng-model="Details.extension" >
+                </div>
+                <div class="col-sm-2">
+                    <label for="countryCode" class="control-label" style="color:black;margin-left:2%">countryCode:</label>
+                    <input type="text" class="form-control" id="countryCode" ng-placeholder="countryCode" ng-model="Details.countryCode" >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-8">
+                    <label for="Email" class="control-label" style="color:black;margin-left:2%">Email:</label>
+                    <input type="email" class="form-control" id="LastName" ng-placeholder="PrimaryEmail" ng-model="Details.emails[0]">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3">
+                    <label for="DOB" class="control-label" style="color:black;margin-left:2%">DOB:</label>
+                    <md-datepicker ng-model="Details.dob" md-placeholder="Enter date"></md-datepicker>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3">
+                    <label for="Groups"  class="control-label" style="color:black;margin-left:2%">Group:</label>
+                    <md-input-container>
+                        <md-select ng-model="Details.groups" multiple>
+                            <md-optgroup label="Group">
+                                <md-option  ng-repeat="Group in groups">{{Group.label}}</md-option>
+                            </md-optgroup>
+
+                        </md-select>
+                  </md-input-container>
+               </div> 
+               <div class="col-sm-3">
+                    <label for="Gender"  class="control-label" style="color:black;margin-left:2%">GENDER:</label>
+                    <md-input-container>
+                        <md-select ng-model="Details.gender" multiple>
+                            <md-optgroup label="GENDER">
+                                <md-option  ng-repeat="c in gender">{{c}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                  </md-input-container>
+               </div> 
+            </div>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                        <div class="col-sm-3">
+                                <i class="material-icons  custom" style="color:black;font-size:60px;padding-right:2%" ng-click="save_Contacts(Details)">edit</i>
+                                <i class="material-icons  custom" style="color:black;font-size:60px;padding-right:2%" ng-click="Cancel_Contacts()">cancel</i>
+                        </div>
+                
+            </div>     
+</form>
+    
+</div>
 </div>
     
     
