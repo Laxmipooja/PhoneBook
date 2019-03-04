@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Data
 public class Contact implements Validable {
 
+
     private String fname;
     private String mname;
     private String lname;
@@ -57,7 +58,7 @@ public class Contact implements Validable {
                 Integer.parseInt(countryCode);
             if(extension != null)
                 Integer.parseInt(extension);
-            Integer.parseInt(contactNumber);
+            Long.parseLong(contactNumber);
             isValidContact = true;
         }catch(NumberFormatException nfe){
             isValidContact = false;
