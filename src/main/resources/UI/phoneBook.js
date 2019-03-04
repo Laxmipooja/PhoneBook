@@ -4,12 +4,11 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
     $scope.AddNewContacts = false;
     $scope.ListGroups = false;
     $scope.DisplayAll=true;
-    $scope.gender = ['F','M'];
+    $scope.gender = ['Female','Male'];
     $scope.SingleContacts = false;
     $scope.ContactList_group=false;
     $scope.AddGroups = false;
     $scope.groupName="";
-   
     $http.get('http://localhost:4567/group').then(function (data){
         $scope.groups = [];
         angular.forEach(data.data, function (value, index) {
@@ -42,7 +41,6 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
         $scope.ContactList_group = false;
         $http.get('http://localhost:4567/group').then(function (data){
         $scope.groups = [];
-         
         angular.forEach(data.data, function (value, index) {
             $scope.groups.push({ id: value.group_id, label: value.group_name });
         });
@@ -130,8 +128,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
                   $scope.List_Group();
             }, function(rejection) {
                  alert("Try Again,Not deleted");
-             });
-             
+             }); 
          } 
      }
     $scope.Delete_contacts=function(event){
@@ -147,7 +144,6 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
             }, function(rejection) {
                  alert("Try Again,Not deleted");
              });
-             
          }
          
      }
@@ -183,7 +179,5 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
     $scope.closeGroup=function(){
         $scope.ListGroups=false;
          $scope.DisplayAll = true;
-    }
-    
-         
+    }      
 });
