@@ -2,3 +2,6 @@
 .idea/
 .jar
 target/
+.project
+.classpath
+.bash_profile.save
