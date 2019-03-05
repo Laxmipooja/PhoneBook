@@ -10,6 +10,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
     $scope.ContactList_group=false;
     $scope.AddGroups = false;
     $scope.groupName="";
+    $scope.conlength=1;
     $scope.SingleContacts = false;
     $http.get('http://localhost:4567/group').then(function (data){
         $scope.groups = [];
@@ -29,6 +30,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
             
             });
     $scope.Add_Contacts = function(){
+        $scope.conlength=1;
         $scope.AddNewContacts = true;
         $scope.ListGroups = false;
         $scope.DisplayAll = false;
@@ -36,6 +38,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
         $scope.ContactList_group = false;
     }
     $scope.List_Group=function(){
+        $scope.conlength=1;
         $scope.ListGroups = true;
         $scope.AddNewContacts = false;
         $scope.DisplayAll = false;
@@ -53,6 +56,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
         })
     }
     $scope.save_Contacts=function(Details){
+        $scope.conlength=1;
         Details.mname = "";
         Details.lname = "";
         Details.extension="1";
@@ -95,11 +99,13 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
      
     }
     $scope.Cancel_Contacts=function(){
+        $scope.conlength=1;
         $scope.AddNewContacts = false;
         $scope.ListGroups = false;
         $scope.DisplayAll = true;
     }
     $scope.Details_contacts=function(event){
+          $scope.conlength=1;
           $scope.SingleContacts = true;
           var id = $(event.target).attr('id')
           $http.get('http://localhost:4567/contact/'+id).then(function (data){
@@ -115,6 +121,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
           $scope.DisplayAll=false;
      }
      $scope.Details_GroupContacts=function(event){
+         
          $scope.ListGroups =false;
          $scope.ContactList_group=true;
          selectedid = $(event.target).attr('id');
@@ -123,6 +130,8 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
          $http.get('http://localhost:4567/contact/group/'+selectedid).then(function (data){
               
                 $scope.Contact_GroupList=data.data;
+                $scope.conlength = data.data.length;
+
           })
          
      }
