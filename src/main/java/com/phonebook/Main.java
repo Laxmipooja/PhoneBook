@@ -61,6 +61,8 @@ public class Main {
 
         get("/group", new GroupAllFetch(model));
 
+        delete("/contact/:contact_id/:group_id", new ContactDeleteFromGroup(model));
+
         get("/alive", (Request request, Response response) -> {
             return "ok";
         });

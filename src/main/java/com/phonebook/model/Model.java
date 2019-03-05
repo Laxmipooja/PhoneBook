@@ -14,5 +14,6 @@ public interface Model {
     int createGroup(String groupName);
     Optional<Group> getGroup(int groupId);
     void deleteGroup(int groupId);
+    void deleteContactFromGroup(int contactId, int groupId);
     List getAllGroups();
 }

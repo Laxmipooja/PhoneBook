@@ -182,6 +182,16 @@ public class Sql2oModel implements Model {
     }
 
     @Override
+    public void deleteContactFromGroup(int contactId, int groupId) {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("delete from contacts_groups where contact_id=:contact_id and group_id=:group_id")
+                    .addParameter("contact_id", contactId)
+                    .addParameter("group_id", groupId)
+                    .executeUpdate();
+        }
+    }
+
+    @Override
     public List getAllGroups() {
         try (Connection conn = sql2o.open()) {
             List<Group> groups = conn.createQuery("select * from c_group")

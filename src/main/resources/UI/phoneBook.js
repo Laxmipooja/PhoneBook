@@ -1,5 +1,6 @@
 var myApp = angular.module("PhoneBook",['ngMaterial']);
 var GroupMap = {}
+var selectedid;
 myApp.controller('ContactController',function EventController($scope,$http,$compile,$window){
     $scope.AddNewContacts = false;
     $scope.ListGroups = false;
@@ -9,6 +10,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
     $scope.ContactList_group=false;
     $scope.AddGroups = false;
     $scope.groupName="";
+    $scope.SingleContacts = false;
     $http.get('http://localhost:4567/group').then(function (data){
         $scope.groups = [];
         angular.forEach(data.data, function (value, index) {
@@ -45,9 +47,8 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
             $scope.groups.push({ id: value.group_id, label: value.group_name });
         });
         $scope.groupList = $scope.groups;
-    
-             for(let group of $scope.groups){
-                GroupMap[group.label]=group.id;
+        for(let group of $scope.groups){
+            GroupMap[group.label]=group.id;
         }
         })
     }
@@ -88,7 +89,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
         $scope.ListGroups = false;
         $scope.DisplayAll = true;
         }, 
-        function(response) { // optional
+        function(response) { 
              console.log("not insuccess");
         });
      
@@ -102,19 +103,45 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
           $scope.SingleContacts = true;
           var id = $(event.target).attr('id')
           $http.get('http://localhost:4567/contact/'+id).then(function (data){
-                $scope.PersoneName=data.data.fname;
+          $scope.fname = data.data.fname;
+          $scope.mname = data.data.mname;
+          $scope.lname = data.data.lname;
+          $scope.contactNumber = data.data.contactInfo.contact_number;
+          $scope.extension = data.data.contactInfo.extension;
+          $scope.countryCode = data.data.contactInfo.country_code;
+          $scope.emails = data.data.emails[0];
+          $scope.Birthday = data.data.dob;
           })
           $scope.DisplayAll=false;
      }
      $scope.Details_GroupContacts=function(event){
          $scope.ListGroups =false;
          $scope.ContactList_group=true;
-         var id = $(event.target).attr('id')
-         $http.get('http://localhost:4567/contact/group/'+id).then(function (data){
+         selectedid = $(event.target).attr('id');
+         console.log("selectedid");
+         console.log(selectedid);
+         $http.get('http://localhost:4567/contact/group/'+selectedid).then(function (data){
               
                 $scope.Contact_GroupList=data.data;
           })
          
+     }
+     $scope.Delete_Groupcontacts=function(event){
+         var r = confirm("Are you sure to delete from the group????");
+         var contactid = $(event.target).attr('id');
+         var groupid=selectedid;
+         console.log(contactid);
+          if(r==true){
+             $http({
+             method: 'DELETE',
+             url: 'http://localhost:4567/contact/'+contactid+"/"+selectedid,
+             })
+             .then(function(response) {
+                  $scope.List_Group();
+            }, function(rejection) {
+                 alert("Try Again,Not deleted");
+             }); 
+         }     
      }
      $scope.Delete_Group=function(event){
          var r = confirm("Are you sure to delete????");
@@ -144,8 +171,7 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
             }, function(rejection) {
                  alert("Try Again,Not deleted");
              });
-         }
-         
+         }   
      }
     $scope.add_Groups=function(){
           $scope.AddGroups = true;
@@ -179,5 +205,9 @@ myApp.controller('ContactController',function EventController($scope,$http,$comp
     $scope.closeGroup=function(){
         $scope.ListGroups=false;
          $scope.DisplayAll = true;
-    }      
+    }  
+    $scope.Cancel_form=function(){
+        $scope.SingleContacts = false;
+        $scope.DisplayAll = true;
+    }
 });
